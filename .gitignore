@@ -1,0 +1,9 @@
+node_modules
+.env
+.env.*
+dist
+/dist
+.DS_Store
+./src/graphql/generated/
+src/graphql/generated/
+.nyc_output
