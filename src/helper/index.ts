@@ -2,7 +2,7 @@ import path from 'path';
 import { structureMap } from '../const';
 import { Structure } from '../types';
 import fs from 'fs/promises';
-import { rootPath } from '../../root';
+import { rootPath } from '../root';
 
 export const getFilePath = async (
   name: string,
