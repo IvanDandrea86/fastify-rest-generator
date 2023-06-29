@@ -16,7 +16,7 @@ describe("createController", () => {
 
     const expectedPath = path.resolve(
       process.cwd(),
-      `./src/modules/${name}/controllers/${name}.controller.ts`
+      `./src/modules/${name}s/${name}.controller.ts`
     );
     expect(fs.writeFile).toHaveBeenCalledWith(expectedPath, expect.any(String));
   });
