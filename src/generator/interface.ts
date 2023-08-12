@@ -1,40 +1,17 @@
-import fs from "fs/promises";
-import { Structure } from "../types";
-import { getFilePath } from "../helper";
+import ejs from 'ejs';
+import fs from 'fs/promises';
+
+import { capitalizeFirstLetter, getFilePath, getTemplatePath } from '../helper';
+import { Structure } from '../types';
 
 export const createInterface = async (name: string, structure: Structure) => {
-    const filePath = await getFilePath(name, structure, "interface");
+  const filePath = await getFilePath(name, structure, 'interface');
 
+  // Load the template from the file system
+  const templateStr = await fs.readFile(getTemplatePath('interface'), 'utf-8');
 
-  const content = `
-  import { RequestGenericInterface } from 'fastify';
-
-  export interface ICreateRequest extends RequestGenericInterface {
-    Body: CreateBody;
-  }
-  export interface IUpdateRequest extends RequestGenericInterface {
-    Body: UpdateBody;
-    Params: UpdateParams;
-  }
-  export interface IDeleteRequest extends RequestGenericInterface {
-    Params: DeleteParams;
-  }
-  
-  export interface DeleteParams {
-    id: string;
-  }
-  export interface UpdateParams {
-    id: string;
-  }
-  export interface UpdateBody {
-    [key: string]: any;
-  }
-  export interface CreateBody {
-    [key: string]: any;
-  }
-  
-
-    `;
+  // Render the template with provided data
+  const content = ejs.render(templateStr, { name:capitalizeFirstLetter(name) });
 
   await fs.writeFile(filePath, content);
 };

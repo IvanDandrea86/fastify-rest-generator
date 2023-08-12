@@ -1,0 +1,37 @@
+import { FastifyReply, FastifyRequest } from 'fastify';
+
+import { I<% capitalizedModel %>CreateRequest, I<% capitalizedModel %>DeleteRequest, I<% capitalizedModel %>UpdateRequest } from '<%= interfaceImportPath %>';
+import <%= model %>Service from '<%= serviceImportPath %>';
+
+const <%= model %>Create = async (request: FastifyRequest<I<% capitalizedModel %>CreateRequest>, reply: FastifyReply) => {
+  try {
+    const params = request.body;
+    await <%= model %>Service.create(params);
+    return { message: '<%= model %> created' };
+  } catch (error) {
+    reply.code(500).send({ error: 'Failed to create <%= model %>', details: error.message });
+  }
+};
+
+const <%= model %>Update = async (request: FastifyRequest<I<% capitalizedModel %>UpdateRequest>, reply: FastifyReply) => {
+  try {
+    const { id } = request.params;
+    const params = request.body;
+    await <%= model %>Service.update(id, params);
+    return { message: '<%= model %> updated' };
+  } catch (error) {
+    reply.code(500).send({ error: 'Failed to update <%= model %>', details: error.message });
+  }
+};
+
+const <%= model %>Delete = async (request: FastifyRequest<I<% capitalizedModel %>DeleteRequest>, reply: FastifyReply) => {
+  try {
+    const { id } = request.params;
+    await <%= model %>Service.remove(id);
+    return { message: '<%= model %> deleted' };
+  } catch (error) {
+    reply.code(500).send({ error: 'Failed to delete <%= model %>', details: error.message });
+  }
+};
+
+export default { <%= model %>Create, <%= model %>Update, <%= model %>Delete };

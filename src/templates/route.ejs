@@ -1,0 +1,35 @@
+
+  import { FastifyPluginAsync } from 'fastify';
+
+  import <%= name %>Controller from '<%= importPathController%><%= name %>';
+  import {
+    createSchema,
+    deleteSchema,
+    updateSchema,
+  } from '<%= importPathSchema%><%= name %>.schema';
+  
+  const <%= name %>RoutePlugin: FastifyPluginAsync = async (server) => {
+    const path = '/<%= name %>';
+  
+    // Create
+    server.post(`${path}`, { schema: createSchema }, <%= name %>Controller.<%= name %>Create);
+  
+    // Update
+    server.put(
+      \`\${path}/:id\`,
+      {
+        schema: updateSchema,
+      },
+      <%= name %>Controller.<%= name %>Update
+    );
+    //  Delete
+    server.delete(
+      \`\${path}/:id\`,
+      {
+        schema: deleteSchema,
+      },
+      <%= name %>Controller.<%= name %>Delete
+    );
+  };
+  
+  export default <%= name %>RoutePlugin;

@@ -1,46 +1,18 @@
+import ejs from 'ejs';
 import fs from 'fs/promises';
+
+import { getFilePath, getTemplatePath } from '../helper';
 import { Structure } from '../types';
-import { getFilePath } from '../helper';
 
 export const createSchema = async (name: string, structure: Structure) => {
   const filePath = await getFilePath(name, structure, 'schema');
 
-  const content = `
-  import { Type } from '@sinclair/typebox';
+  const templateStr =await fs.readFile(getTemplatePath('schema'), 'utf-8');
 
-  export const updateSchema = {
-    params: {
-      id: Type.String,
-    },
-    body: {},
-    response: {
-      200: Type.Object({
-        message: Type.String(),
-      }),
-    },
-  };
-  export const createSchema = {
-    body: {},
-    response: {
-      200: Type.Object({
-        message: Type.String(),
-      }),
-    },
-  };
-  
-  export const deleteSchema = {
-    params: {
-      id: Type.String,
-    },
-    body: {},
-    response: {
-      200: Type.Object({
-        message: Type.String(),
-      }),
-    },
-  };
-  
-    `;
+  // Render the template with provided data
+  const content = ejs.render(templateStr, {
+    name,
+  });
 
   await fs.writeFile(filePath, content);
 };

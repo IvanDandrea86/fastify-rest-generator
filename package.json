@@ -12,13 +12,16 @@
     "test": "jest",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
-    "build": "tsc"
+    "pretty": "prettier --write \"./**/*.{js,jsx,json,tsx,ts}\" --ignore \"./components/style/*.{js,jsx,json,tsx,ts}\"",
+    "build": "tsc && cp -r src/templates dist/templates"
   },
   "author": "Ivan D'Andrea",
   "license": "MIT",
   "devDependencies": {
+    "@types/ejs": "^3.1.2",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.2",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
     "eslint": "^8.39.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
@@ -29,7 +32,10 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@sinclair/typebox": "^0.31.0",
     "commander": "^11.0.0",
+    "ejs": "^3.1.9",
+    "fastify": "^4.21.0",
     "ts-node": "^10.9.1"
   }
 }

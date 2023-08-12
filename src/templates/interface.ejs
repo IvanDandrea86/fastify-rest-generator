@@ -1,0 +1,31 @@
+
+import { RequestGenericInterface } from 'fastify';
+
+// Interfaces for <%= name %> requests
+
+export interface I<%= name %>CreateRequest extends RequestGenericInterface {
+    Body: <%= name %>CreateBody;
+}
+
+export interface I<%= name %>UpdateRequest extends RequestGenericInterface {
+    Body: <%= name %>UpdateBody;
+    Params: <%= name %>Params;
+}
+
+export interface I<%= name %>DeleteRequest extends RequestGenericInterface {
+    Params: <%= name %>Params;
+}
+
+// Body and Params interfaces
+
+export interface <%= name %>CreateBody {
+    [key: string]: any; // This is a generic type. Modify as needed.
+}
+
+export interface <%= name %>UpdateBody {
+    [key: string]: any; // This is a generic type. Modify as needed.
+}
+
+export interface <%= name %>Params {
+    id: string;
+}

@@ -1,0 +1,54 @@
+import {
+  <%= name %>CreateBody,
+  <%= name %>UpdateBody
+} from '<%= interfaceImportPath %>';
+
+export default {
+  /**
+   * Create a new <%= name %>
+   * @param params Data to create the <%= name %>
+   */
+  async create(params: <%= name %>CreateBody) {
+    try {
+      //    LOGICS HERE
+
+    } catch (error:unknown) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to create  <%= name %>: ${error.message}`);
+      } else {
+        throw new Error('Failed to create  <%= name %>');
+      }    }
+  },
+
+  /**
+   * Update an existing <%= name %> by ID
+   * @param id ID of the <%= name %>
+   * @param params Updated data for the <%= name %>
+   */
+  async update(id: string, params: <%= name %>UpdateBody) {
+    try {
+      //    LOGICS HERE
+
+    } catch (error:unknown) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to update  <%= name %>: ${error.message}`);
+      } else {
+        throw new Error('Failed to update  <%= name %>');
+      }    }
+  },
+
+  /**
+   * Remove a <%= name %> by ID
+   * @param id ID of the <%= name %>
+   */
+  async remove(id: string) {
+    try {
+      //    LOGICS HERE
+    } catch (error:unknown) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to delete  <%= name %>: ${error.message}`);
+      } else {
+        throw new Error('Failed to delete  <%= name %>');
+      }    }
+  }
+};

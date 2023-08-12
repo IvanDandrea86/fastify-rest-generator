@@ -1,6 +1,6 @@
-import { StructureMap } from "../types";
+import { StructureMap } from '../types';
 
 export const structureMap: StructureMap = {
-  module: "modules",
-  role: "",
+  module: 'modules',
+  role: '',
 };

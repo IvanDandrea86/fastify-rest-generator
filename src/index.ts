@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { Structure } from './types';
+
 import { createController } from './generator/controller';
-import { createService } from './generator/service';
 import { createInterface } from './generator/interface';
 import { createRoute } from './generator/route';
 import { createSchema } from './generator/schema';
+import { createService } from './generator/service';
+import { Structure } from './types';
 
 const program = new Command();
 
@@ -22,15 +23,24 @@ program
     'module'
   )
   .action(async (name: string, options: { structure: Structure }) => {
+    const formattedName = name.toLocaleLowerCase().trim();
     // Check the structure type and call the appropriate function
     if (options.structure === 'module' || options.structure === 'role') {
-      await createController(name, options.structure);
-      await createService(name, options.structure);
+      try{
 
-      await createInterface(name, options.structure);
-
-      await createRoute(name, options.structure);
-      await createSchema(name, options.structure);
+        await createController(formattedName, options.structure);
+        await createService(formattedName, options.structure);
+        
+        await createInterface(formattedName, options.structure);
+        
+        await createRoute(formattedName, options.structure);
+        await createSchema(formattedName, options.structure);
+      }
+      catch(err){
+        if(err instanceof Error)
+        console.log(err.message)
+      return
+      }
       // Repeat for other create functions
     } else {
       console.log('Invalid structure type. Please choose "module" or "role".');
@@ -38,7 +48,7 @@ program
     }
 
     console.log(
-      `Resources for ${name} created with ${options.structure} structure!`
+      `Resources for ${formattedName} created with ${options.structure} structure!`
     );
   });
 
