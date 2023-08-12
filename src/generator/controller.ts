@@ -20,7 +20,7 @@ export const createController = async (model: string, structure: Structure) => {
       model,
       interfaceImportPath,
       serviceImportPath,
-      capitalizedModel
+      capitalizedModel:capitalizedModel
     });
     
     await fs.writeFile(filePath, content);
