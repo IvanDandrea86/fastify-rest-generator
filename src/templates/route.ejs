@@ -16,7 +16,7 @@
   
     // Update
     server.put(
-      \`\${path}/:id\`,
+      `${path}:id`,
       {
         schema: updateSchema,
       },
@@ -24,7 +24,7 @@
     );
     //  Delete
     server.delete(
-      \`\${path}/:id\`,
+      `${path}:id`,
       {
         schema: deleteSchema,
       },

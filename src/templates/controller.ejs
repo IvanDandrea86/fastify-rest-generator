@@ -8,8 +8,9 @@ const <%= model %>Create = async (request: FastifyRequest<I<% capitalizedModel %
     const params = request.body;
     await <%= model %>Service.create(params);
     return { message: '<%= model %> created' };
-  } catch (error) {
-    reply.code(500).send({ error: 'Failed to create <%= model %>', details: error.message });
+  } catch (error:unknown) {
+    const details=error instanceof Error ?  error.message : JSON.stringify(error)
+    reply.code(500).send({ error: 'Failed to create <%= model %>', details });
   }
 };
 
@@ -20,7 +21,9 @@ const <%= model %>Update = async (request: FastifyRequest<I<% capitalizedModel %
     await <%= model %>Service.update(id, params);
     return { message: '<%= model %> updated' };
   } catch (error) {
-    reply.code(500).send({ error: 'Failed to update <%= model %>', details: error.message });
+    const details=error instanceof Error ?  error.message : JSON.stringify(err)
+
+    reply.code(500).send({ error: 'Failed to update <%= model %>', details });
   }
 };
 
@@ -30,7 +33,9 @@ const <%= model %>Delete = async (request: FastifyRequest<I<% capitalizedModel %
     await <%= model %>Service.remove(id);
     return { message: '<%= model %> deleted' };
   } catch (error) {
-    reply.code(500).send({ error: 'Failed to delete <%= model %>', details: error.message });
+    const details=error instanceof Error ?  error.message : JSON.stringify(err)
+
+    reply.code(500).send({ error: 'Failed to delete <%= model %>', details });
   }
 };
 

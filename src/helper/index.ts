@@ -40,7 +40,7 @@ const getFilePath = async (
 };
 
 const getImportPath = (model:string,structure: Structure, role: Role): string => {
-   return structure === 'role' ? `@/${role}s/` :`./${model}.${role}`;
+   return structure === 'role' ? `@/${role}s/${model}.${role}` :`./${model}.${role}`;
 
 };
 /**
