@@ -21,7 +21,7 @@ fastify-rest-generator post
 By default, the tool generates files in a "module" structure. You can specify a "role" structure with the -s option:
 
 ```bash
-fastify-rest-generator post -s role
+fastify-rest-generator generate user -s role
 ```
 
 cc
