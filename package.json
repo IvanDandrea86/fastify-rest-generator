@@ -17,6 +17,10 @@
   },
   "author": "Ivan D'Andrea",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/yourrepository.git"
+  },
   "devDependencies": {
     "@types/ejs": "^3.1.2",
     "@types/jest": "^29.5.2",

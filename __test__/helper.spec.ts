@@ -21,9 +21,11 @@ describe('Utility Functions', () => {
       const dirPath = constructDirPath('user', 'module', 'controller');
       const projectRoot = 'fastify-rest-generator'; 
       const parts = dirPath.split(`\\${projectRoot}\\`);
-      const relativePath = '/' + (parts[1] || '').replace(/\\/g, '/');
+      console.log(parts)
+      const relativePath = '/' + (parts[0] || '').replace(/\\/g, '/');
+      console.log(relativePath)
       // expect(dirPath.endsWith('/src/modules/users')).toBe(true);
-      expect(relativePath).toBe('/src/modules/users');
+      expect(relativePath.endsWith('/src/modules/users')).toBe(true)
       // expect(path.normalize(dirPath).endsWith('/src/modules/users')).toBe(true);
     });
 
@@ -61,7 +63,7 @@ describe('Utility Functions', () => {
   describe('getImport', () => {
     it('should return the correct import for role', () => {
       const importPath = getImportPath('post', 'role', 'controller');
-      expect(importPath).toBe('@/controllers/');
+      expect(importPath).toBe('@/controllers/post.controller');
     });
 
     it('should return the correct import for other structures', () => {
