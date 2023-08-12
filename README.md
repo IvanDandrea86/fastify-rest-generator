@@ -24,6 +24,25 @@ By default, the tool generates files in a "module" structure. You can specify a 
 fastify-rest-generator generate user -s role
 ```
 
+or
+
+```json
+{
+
+  // ... other package.json fields ...
+  "scripts": {
+    "generate": "fastify-rest-generator generate"
+  }
+}
+```
+and
+```bash
+npm run generate -- post
+#or
+npm run generate -- user -s role
+
+```
+
 cc
 This will generate:
 

@@ -19,7 +19,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/yourrepository.git"
+    "url": "https://github.com/IvanDandrea86/fastify-rest-generator.git"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.2",
