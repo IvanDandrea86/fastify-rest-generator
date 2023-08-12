@@ -52,7 +52,8 @@ function getTemplatePath(templatemodel: Role): string {
   return path.join(__dirname, '..', 'templates', `${templatemodel}.ejs`);
 }
 
-const capitalizeFirstLetter=(string: string)=> {
+const capitalizeFirstLetter = (string: string): string => {
+  if (!string) return ''; // Return an empty string if input is falsy
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 

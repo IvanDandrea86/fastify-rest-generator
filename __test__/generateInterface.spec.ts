@@ -1,7 +1,8 @@
-import { createInterface } from '../src/generator/interface';
-import * as fs from 'fs/promises';
 import ejs from 'ejs';
-import { getFilePath, getImportPath, getTemplatePath } from '../src/helper';
+import * as fs from 'fs/promises';
+
+import { createInterface } from '../src/generator/interface';
+import { capitalizeFirstLetter, getFilePath, getImportPath, getTemplatePath } from '../src/helper';
 import { Structure } from '../src/types';
 
 jest.mock('fs/promises');
@@ -29,13 +30,17 @@ describe('createinterface', () => {
     // Mocking ejs render method
     (ejs.render as jest.Mock).mockReturnValue('mockContent');
 
+
+    (capitalizeFirstLetter as jest.Mock).mockImplementation((str) => {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    });
     await createInterface(mockName, mockStructure);
     
     // Expectations
     expect(getFilePath).toHaveBeenCalledWith(mockName, mockStructure, 'interface');
     expect(fs.readFile).toHaveBeenCalledWith(getTemplatePath('interface') ,'utf-8');
     expect(ejs.render).toHaveBeenCalledWith('mockTemplate', {
-      name: mockName
+      model: capitalizeFirstLetter(mockName)
     });
     expect(fs.writeFile).toHaveBeenCalledWith('mockFilePath', 'mockContent');
   });

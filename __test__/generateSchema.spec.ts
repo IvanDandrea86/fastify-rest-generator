@@ -1,7 +1,8 @@
-import { createSchema } from '../src/generator/schema';
-import * as fs from 'fs/promises';
 import ejs from 'ejs';
-import { getFilePath, getImportPath, getTemplatePath } from '../src/helper';
+import * as fs from 'fs/promises';
+
+import { createSchema } from '../src/generator/schema';
+import { capitalizeFirstLetter, getFilePath, getImportPath, getTemplatePath } from '../src/helper';
 import { Structure } from '../src/types';
 
 jest.mock('fs/promises');
@@ -23,6 +24,10 @@ describe('createschema', () => {
     (getFilePath as jest.Mock).mockResolvedValue('mockFilePath');
     (getImportPath as jest.Mock).mockReturnValue('./mock-path/');
 
+    
+    (capitalizeFirstLetter as jest.Mock).mockImplementation((str) => {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    });
     
     // Mocking the file read (assuming you're loading a template from fs)
     (fs.readFile as jest.Mock).mockResolvedValue('mockTemplate');
