@@ -1,6 +1,7 @@
 import ejs from 'ejs';
 import * as fs from 'fs/promises';
 
+import { mockErrorHandler } from '../../mockUtils';
 import { createService } from '../../src/generator/service';
 import {
   capitalizeFirstLetter,
@@ -9,7 +10,6 @@ import {
   getTemplatePath,
 } from '../../src/helper';
 import { Structure } from '../../src/types';
-import { mockErrorHandler } from '../../mockUtils';
 
 jest.mock('fs/promises');
 jest.mock('ejs');
