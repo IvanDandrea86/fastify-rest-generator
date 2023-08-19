@@ -3,7 +3,7 @@ import path from 'path';
 
 import { structureMap } from '../const';
 import { rootPath } from '../root';
-import {  Role, Structure } from '../types';
+import { Role, Structure } from '../types';
 
 const constructDirPath = (
   model: string,
@@ -39,9 +39,14 @@ const getFilePath = async (
   return path.join(dirPath, `${model}.${role}.ts`);
 };
 
-const getImportPath = (model:string,structure: Structure, role: Role): string => {
-   return structure === 'role' ? `@/${role}s/${model}.${role}` :`./${model}.${role}`;
-
+const getImportPath = (
+  model: string,
+  structure: Structure,
+  role: Role
+): string => {
+  return structure === 'role'
+    ? `@/${role}s/${model}.${role}`
+    : `./${model}.${role}`;
 };
 /**
  * Get the full path for a given template model.
@@ -55,9 +60,13 @@ function getTemplatePath(templatemodel: Role): string {
 const capitalizeFirstLetter = (string: string): string => {
   if (!string) return ''; // Return an empty string if input is falsy
   return string.charAt(0).toUpperCase() + string.slice(1);
-}
+};
 
-
-
-
-export { constructDirPath, ensureDirExists, getFilePath, getImportPath,getTemplatePath,capitalizeFirstLetter };
+export {
+  constructDirPath,
+  ensureDirExists,
+  getFilePath,
+  getImportPath,
+  getTemplatePath,
+  capitalizeFirstLetter,
+};

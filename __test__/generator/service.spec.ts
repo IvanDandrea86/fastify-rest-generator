@@ -1,18 +1,19 @@
 import ejs from 'ejs';
 import * as fs from 'fs/promises';
 
-import { createService } from '../src/generator/service';
+import { createService } from '../../src/generator/service';
 import {
   capitalizeFirstLetter,
   getFilePath,
   getImportPath,
   getTemplatePath,
-} from '../src/helper';
-import { Structure } from '../src/types';
+} from '../../src/helper';
+import { Structure } from '../../src/types';
+import { mockErrorHandler } from '../../mockUtils';
 
 jest.mock('fs/promises');
 jest.mock('ejs');
-jest.mock('../src/helper');
+jest.mock('../../src/helper');
 
 describe('createservice', () => {
   beforeEach(() => {
@@ -50,12 +51,38 @@ describe('createservice', () => {
       getTemplatePath('service'),
       'utf-8'
     );
-    expect(ejs.render).toHaveBeenCalledWith('mockTemplate', {
-      name: mockName,
-      interfaceImportPath: './mock-path/post.interface',
-    });
+    expect(ejs.render).toHaveBeenCalledWith(
+      'mockTemplate',
+      {
+        name: mockName,
+        interfaceImportPath: './mock-path/post.interface',
+      },
+      { async: true }
+    );
     expect(fs.writeFile).toHaveBeenCalledWith('mockFilePath', 'mockContent');
   });
 
-  // Additional tests for error scenarios or different structures can be added...
+  it('should handle errors and re-throw them', async () => {
+    const mockName = 'post';
+    const mockStructure: Structure = 'module';
+
+    (fs.readFile as jest.Mock).mockRejectedValue(new Error('readFile error'));
+    mockErrorHandler(); // Use the utility function
+
+    await expect(createService(mockName, mockStructure)).rejects.toThrow(
+      'readFile error'
+    );
+  });
+
+  it('should handle non-Error instances', async () => {
+    const mockName = 'post';
+    const mockStructure: Structure = 'module';
+
+    (fs.readFile as jest.Mock).mockRejectedValue({ cause: 'Unknown error' });
+    mockErrorHandler();
+
+    await expect(createService(mockName, mockStructure)).rejects.toThrow(
+      'Unknown error create service'
+    );
+  });
 });

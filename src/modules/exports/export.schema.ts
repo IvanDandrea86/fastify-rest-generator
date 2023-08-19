@@ -1,6 +1,6 @@
 import { Type } from '@sinclair/typebox';
 
-   const Update<%= model %>Schema = {
+   const UpdateExportSchema = {
     params: Type.Object({
       id: Type.String(),
     }),
@@ -11,7 +11,7 @@ import { Type } from '@sinclair/typebox';
       }),
     },
   };
-   const Create<%= model %>Schema = {
+   const CreateExportSchema = {
     body: {},
     response: {
       200: Type.Object({
@@ -20,7 +20,7 @@ import { Type } from '@sinclair/typebox';
     },
   };
   
-   const Delete<%= model %>Schema = {
+   const DeleteExportSchema = {
     params: Type.Object({
       id: Type.String(),
     }),
@@ -32,5 +32,5 @@ import { Type } from '@sinclair/typebox';
     },
   };
 
-  export {Delete<%= model %>Schema, Create<%=model %>Schema,Update<%= model %>Schema}
+  export {DeleteExportSchema, CreateExportSchema,UpdateExportSchema}
 

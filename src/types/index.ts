@@ -13,3 +13,9 @@ export type Folders =
   | 'modules';
 
 export type Role = 'controller' | 'interface' | 'schema' | 'route' | 'service';
+
+export interface Task {
+  createFunc: (model: string, structure: Structure) => Promise<void>;
+  label: Role;
+  getPath: (model: string, structure: Structure) => Promise<string>;
+}

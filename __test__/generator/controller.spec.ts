@@ -1,14 +1,15 @@
 import ejs from 'ejs';
 import * as fs from 'fs/promises';
 
-import { createController } from '../src/generator/controller';
-import { getFilePath, getImportPath, getTemplatePath } from '../src/helper';
-import { capitalizeFirstLetter } from '../src/helper';
-import { Structure } from '../src/types';
+import { createController } from '../../src/generator/controller';
+import { getFilePath, getImportPath, getTemplatePath } from '../../src/helper';
+import { capitalizeFirstLetter } from '../../src/helper';
+import { Structure } from '../../src/types';
+import { mockErrorHandler } from '../../mockUtils';
 
 jest.mock('fs/promises');
 jest.mock('ejs');
-jest.mock('../src/helper');
+jest.mock('../../src/helper');
 
 describe('createController', () => {
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('createController', () => {
   it('should generate the correct controller file content', async () => {
     const mockName = 'post';
     const capitalizedModel = 'Post';
-    const mockStructure: Structure = 'module'; 
+    const mockStructure: Structure = 'module';
 
     // Mocking the helper functions
     (getFilePath as jest.Mock).mockResolvedValue('mockFilePath');
@@ -55,14 +56,39 @@ describe('createController', () => {
       getTemplatePath('controller'),
       'utf-8'
     );
-    expect(ejs.render).toHaveBeenCalledWith('mockTemplate', {
-      model: mockName,
-      capitalizedModel: capitalizedModel,
-      interfaceImportPath: interfaceImportPath,
-      serviceImportPath: serviceImportPath,
-    });
+    expect(ejs.render).toHaveBeenCalledWith(
+      'mockTemplate',
+      {
+        model: mockName,
+        capitalizedModel: capitalizedModel,
+        interfaceImportPath: interfaceImportPath,
+        serviceImportPath: serviceImportPath,
+      },
+      { async: true }
+    );
     expect(fs.writeFile).toHaveBeenCalledWith('mockFilePath', 'mockContent');
   });
+  it('should handle errors and re-throw them', async () => {
+    const mockName = 'post';
+    const mockStructure: Structure = 'module';
 
-  // Additional tests for error scenarios or different structures can be added...
+    (fs.readFile as jest.Mock).mockRejectedValue(new Error('readFile error'));
+    mockErrorHandler(); // Use the utility function
+
+    await expect(createController(mockName, mockStructure)).rejects.toThrow(
+      'readFile error'
+    );
+  });
+
+  it('should handle non-Error instances', async () => {
+    const mockName = 'post';
+    const mockStructure: Structure = 'module';
+
+    (fs.readFile as jest.Mock).mockRejectedValue({ cause: 'Unknown error' });
+    mockErrorHandler(); // Use the utility function
+
+    await expect(createController(mockName, mockStructure)).rejects.toThrow(
+      'Unknown error create controller'
+    );
+  });
 });
