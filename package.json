@@ -10,10 +10,12 @@
   ],
   "scripts": {
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
     "pretty": "prettier --write \"./**/*.{js,jsx,json,tsx,ts}\" --ignore \"./components/style/*.{js,jsx,json,tsx,ts}\"",
-    "build": "tsc && cp -r src/templates dist/templates"
+    "build": "tsc && cp -r src/templates dist/templates",
+    "pre-push": "npm run pretty && npm run build && npm run  test"
   },
   "author": "Ivan D'Andrea",
   "license": "MIT",

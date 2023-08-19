@@ -43,22 +43,26 @@ npm run generate -- user -s role
 
 ```
 
-cc
+
 This will generate:
 
 For "module" structure:
+```bash
 ./src/modules/resourceName/resourceName.controller.ts
 ./src/modules/resourceName/resourceName.service.ts
 ./src/modules/resourceName/resourceName.interface.ts
 ./src/modules/resourceName/resourceName.route.ts
 ./src/modules/resourceName/resourceName.schema.ts
+```
+
 For "role" structure:
+```bash
 ./src/controllers/resourceName.controller.ts
 ./src/services/resourceName.service.ts
 ./src/interfaces/resourceName.interface.ts
 ./src/routes/resourceName.route.ts
 ./src/schemas/resourceName.schema.ts
-
+```
 ## Contributing
 
 Contributions are welcome! Feel free to open a pull request or issue if you have suggestions for improvements or have identified bugs. If you plan to make large changes, please open an issue first to discuss your plans.

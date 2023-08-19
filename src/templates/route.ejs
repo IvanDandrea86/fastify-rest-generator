@@ -3,22 +3,22 @@ import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 
   import <%= name %>Controller from '<%= importPathController%>';
   import {
-    createSchema,
-    deleteSchema,
-    updateSchema,
+    Create<%= model %>Schema,
+    Update<%= model %>Schema,
+    Delete<%= model %>Schema,
   } from '<%= importPathSchema%>';
   
   const <%= name %>RoutePlugin: FastifyPluginAsyncTypebox = async (server) => {
     const path = '/<%= name %>';
   
     // Create
-    server.post(`${path}`, { schema: createSchema }, <%= name %>Controller.<%= name %>Create);
+    server.post(`${path}`, { schema: Create<%= model %>Schema }, <%= name %>Controller.<%= name %>Create);
   
     // Update
     server.put(
       `${path}:id`,
       {
-        schema: updateSchema,
+        schema: Update<%= model %>Schema,
       },
       <%= name %>Controller.<%= name %>Update
     );
@@ -26,7 +26,7 @@ import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
     server.delete(
       `${path}:id`,
       {
-        schema: deleteSchema,
+        schema: Delete<%= model %>Schema,
       },
       <%= name %>Controller.<%= name %>Delete
     );

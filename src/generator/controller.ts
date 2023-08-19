@@ -1,36 +1,41 @@
 import ejs from 'ejs';
 import fs from 'fs/promises';
 
-import { capitalizeFirstLetter, getFilePath, getImportPath,getTemplatePath } from '../helper';
+import {
+  capitalizeFirstLetter,
+  getFilePath,
+  getImportPath,
+  getTemplatePath,
+} from '../helper';
 import { Structure } from '../types';
+import { errorHandler } from '../helper/errorHandler';
 
 export const createController = async (model: string, structure: Structure) => {
-  try{
-    const capitalizedModel=capitalizeFirstLetter(model)
+  try {
+    const capitalizedModel = capitalizeFirstLetter(model);
     const filePath = await getFilePath(model, structure, 'controller');
-    const interfaceImportPath =
-    getImportPath(model,structure, 'interface') ;
-    const serviceImportPath =
-    getImportPath(model,structure, 'service');
-    
+    const interfaceImportPath = getImportPath(model, structure, 'interface');
+    const serviceImportPath = getImportPath(model, structure, 'service');
+
     // Load the template from the file system
-    const templateStr = await fs.readFile(getTemplatePath('controller'), 'utf-8');  
+    const templateStr = await fs.readFile(
+      getTemplatePath('controller'),
+      'utf-8'
+    );
     // Render the template with provided data
-    const content = ejs.render(templateStr, {
-      model,
-      interfaceImportPath,
-      serviceImportPath,
-      capitalizedModel:capitalizedModel
-    });
-    
+    const content = await ejs.render(
+      templateStr,
+      {
+        model,
+        interfaceImportPath,
+        serviceImportPath,
+        capitalizedModel: capitalizedModel,
+      },
+      { async: true }
+    );
+
     await fs.writeFile(filePath, content);
+  } catch (err) {
+    errorHandler(err, 'create', 'controller');
   }
-  catch(err:unknown){
-    if(err instanceof Error)
-    throw new Error(err.message)
-  
-  else
-    throw new Error(JSON.stringify(err))
-  
-}
-}
+};

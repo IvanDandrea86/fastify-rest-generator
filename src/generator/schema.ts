@@ -1,18 +1,27 @@
 import ejs from 'ejs';
 import fs from 'fs/promises';
 
-import { getFilePath, getTemplatePath } from '../helper';
+import { capitalizeFirstLetter, getFilePath, getTemplatePath } from '../helper';
 import { Structure } from '../types';
+import { errorHandler } from '../helper/errorHandler';
 
-export const createSchema = async (name: string, structure: Structure) => {
-  const filePath = await getFilePath(name, structure, 'schema');
+export const createSchema = async (model: string, structure: Structure) => {
+  try {
+    const filePath = await getFilePath(model, structure, 'schema');
 
-  const templateStr =await fs.readFile(getTemplatePath('schema'), 'utf-8');
+    const templateStr = await fs.readFile(getTemplatePath('schema'), 'utf-8');
 
-  // Render the template with provided data
-  const content = ejs.render(templateStr, {
-    name,
-  });
+    // Render the template with provided data
+    const content = await ejs.render(
+      templateStr,
+      {
+        model: capitalizeFirstLetter(model),
+      },
+      { async: true }
+    );
 
-  await fs.writeFile(filePath, content);
+    await fs.writeFile(filePath, content);
+  } catch (err) {
+    errorHandler(err, 'create', 'schema');
+  }
 };

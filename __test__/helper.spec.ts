@@ -14,22 +14,28 @@ import { Role } from '../src/types';
 describe('Utility Functions', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-});
+  });
 
   describe('constructDirPath', () => {
     it('should return the correct directory path for modules', () => {
       const dirPath = constructDirPath('user', 'module', 'controller');
-      const projectRoot = 'fastify-rest-generator'; 
+      const projectRoot = 'fastify-rest-generator';
       const parts = dirPath.split(`\\${projectRoot}\\`);
-      console.log(parts)
       const relativePath = '/' + (parts[0] || '').replace(/\\/g, '/');
-      console.log(relativePath)
       // expect(dirPath.endsWith('/src/modules/users')).toBe(true);
-      expect(relativePath.endsWith('/src/modules/users')).toBe(true)
+      expect(relativePath.endsWith('/src/modules/users')).toBe(true);
       // expect(path.normalize(dirPath).endsWith('/src/modules/users')).toBe(true);
     });
 
-    // Add more tests for different structure and role combinations if needed.
+    it('should return the correct directory path for roles', () => {
+      const dirPath = constructDirPath('user', 'role', 'controller');
+      const projectRoot = 'fastify-rest-generator';
+      const parts = dirPath.split(`\\${projectRoot}\\`);
+      const relativePath = '/' + (parts[0] || '').replace(/\\/g, '/');
+      // expect(dirPath.endsWith('/src/modules/users')).toBe(true);
+      expect(relativePath.endsWith('/src/controllers')).toBe(true);
+      // expect(path.normalize(dirPath).endsWith('/src/modules/users')).toBe(true);
+    });
   });
 
   // Mocking fs.access and fs.mkdir for the ensureDirExists function test
@@ -107,7 +113,11 @@ describe('getTemplatePath', () => {
     expect(result).toEqual(expectedPath);
   });
 });
-
-it('should capitalize the first letter of a string', () => {
-  expect(capitalizeFirstLetter('post')).toBe('Post');
+describe('capitalizeFirstLetter', () => {
+  it('should capitalize the first letter of a string', () => {
+    expect(capitalizeFirstLetter('post')).toBe('Post');
+  });
+  it('should capitalize the first letter of a string', () => {
+    expect(capitalizeFirstLetter('post')).toBe('Post');
+  });
 });
