@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-
-import { Structure } from './types';
 import fs from 'fs';
+
 import { capitalizeFirstLetter } from './helper';
 import { tasks } from './tasks';
+import { Structure } from './types';
 
 const program = new Command();
 

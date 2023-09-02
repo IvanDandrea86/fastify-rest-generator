@@ -2,8 +2,8 @@ import ejs from 'ejs';
 import fs from 'fs/promises';
 
 import { capitalizeFirstLetter, getFilePath, getTemplatePath } from '../helper';
-import { Structure } from '../types';
 import { errorHandler } from '../helper/errorHandler';
+import { Structure } from '../types';
 
 export const createSchema = async (model: string, structure: Structure) => {
   try {

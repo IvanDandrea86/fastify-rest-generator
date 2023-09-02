@@ -16,7 +16,7 @@ import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
   
     // Update
     server.put(
-      `${path}:id`,
+      `${path}/:id`,
       {
         schema: Update<%= model %>Schema,
       },
@@ -24,7 +24,7 @@ import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
     );
     //  Delete
     server.delete(
-      `${path}:id`,
+      `${path}/:id`,
       {
         schema: Delete<%= model %>Schema,
       },

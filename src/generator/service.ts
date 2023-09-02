@@ -7,8 +7,8 @@ import {
   getImportPath,
   getTemplatePath,
 } from '../helper';
-import { Structure } from '../types';
 import { errorHandler } from '../helper/errorHandler';
+import { Structure } from '../types';
 
 export const createService = async (name: string, structure: Structure) => {
   try {

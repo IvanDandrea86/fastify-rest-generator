@@ -1,9 +1,9 @@
 import { createController } from './generator/controller';
+import { createInterface } from './generator/interface';
 import { createRoute } from './generator/route';
 import { createSchema } from './generator/schema';
 import { createService } from './generator/service';
 import { getFilePath } from './helper';
-import { createInterface } from './generator/interface';
 import { Task } from './types';
 
 export const tasks: Task[] = [
